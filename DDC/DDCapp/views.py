@@ -12,16 +12,28 @@ def index(request):
     subcategories = Subcategory.objects.all()
     cashflows = CashFlow.objects.all()
     unique_dates = CashFlow.objects.values_list('date', flat=True).distinct() #отбор дат по конкретным дням
+    
+    start_date = request.GET.get('start_date')
+    end_date = request.GET.get('end_date')
+    if start_date and end_date:
+        cashflows = cashflows.filter(date__range=[start_date, end_date])
+    elif start_date:
+        cashflows = cashflows.filter(date__gte=start_date)
+    elif end_date:
+        cashflows = cashflows.filter(date__lte=end_date)
 
     status_id = request.GET.get('status')
     if status_id:
         cashflows = cashflows.filter(status_id=status_id)
+
     type_id = request.GET.get('type')
     if type_id:
         cashflows = cashflows.filter(type_id=type_id)
+
     category_id = request.GET.get('category')
     if category_id:
         cashflows = cashflows.filter(category_id=category_id)
+        
     subcategory_id = request.GET.get('subcategory')
     if subcategory_id:
         cashflows = cashflows.filter(subcategory_id=subcategory_id)
