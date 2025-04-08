@@ -1,0 +1,21 @@
+.check_boxing{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.comment_create_form{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: 20px 0px;
+}
+
+
+.form_edit_buttons{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}

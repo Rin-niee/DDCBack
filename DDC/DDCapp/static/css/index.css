@@ -1,29 +1,78 @@
-.filter_form_index{
+.couple 
+{
     display: flex;
-    margin-top: 90px;
-    align-content: space-around;
-    flex-wrap: wrap;
-    flex-direction: column;
-    background: #015958;
-    border-radius: 21px;
-    align-items: center;
 }
-select{
-    color: white;
-    background: #008F8C;
-    border-radius: 20px;
-}
-.blockDDC{
-    background-color: antiquewhite;
-}
-
-.couple {display: flex;}
 .couple_left{
     width: 50% !important;
-    border-radius: 32px 0px 0px 32px !important;
+    border-radius: 20px 0px 0px 20px !important;
 }
 
-.couple_right{
+.couple_right {
     width: 50% !important;
-    border-radius: 0px 32px 32px 0px !important
+    border-radius: 0px 20px 20px 0px !important;
+}
+
+.index_filter_container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.found_item{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+
+.blockDDC{
+    background-color: #015958;
+    border-radius: 20px;
+    padding: 20px 30px;
+    margin: 30px 0px;
+}
+
+.index_exit{
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background-color: #008F8C;
+    border-radius: 20px;
+    padding: 6px 30px;
+    margin: 5px 0px;
+}
+
+.exit_data {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.cashilil_data {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+.block_sumcomment{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#edit_pic{
+    max-width: 20px !important;
+    object-fit: contain;
+}
+#count_sum{
+    font-size: 65px;
+    margin: 0px;
+}
+#comment{
+    width: 65%;
+    height: auto;
 }

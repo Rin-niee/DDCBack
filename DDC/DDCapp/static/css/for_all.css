@@ -1,3 +1,77 @@
 body{
     background-color: #023535;
+    padding: 30px;
+}
+
+
+select{
+    border: 0px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background: #008F8C;
+    border-radius: 20px;
+    padding: 6px 50px;
+    font-size: 15px;
+}
+
+.filter_form {
+    display: flex;
+    margin-top: 90px;
+    flex-wrap: wrap;
+    background: #015958;
+    border-radius: 21px;
+    padding: 20px 30px;
+}
+
+button{
+    border: 0px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background: #008F8C;
+    border-radius: 20px;
+    padding: 6px;
+    font-size: 15px;
+}
+
+.name_title{
+    margin-top: 2%;
+    font-size: 40px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #008F8C;
+}
+
+input, textarea{
+    border: 0px solid #ccc;
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background: #008F8C;
+    border-radius: 20px;
+    padding: 6px 50px;
+    font-size: 15px;
+    border-color: #008F8C;
+}
+
+label{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.title_mark{
+    display: flex;
+    background: #015958;
+    padding: 0px 50px;
+    border-radius: 20px;
+    flex-direction: row;
+    margin-left: -4%;
+    justify-content: flex-end;
+}
+
+input::placeholder {
+    color: white; 
+    opacity: 1;
+}
+
+textarea::placeholder {
+    color: white; 
+    opacity: 1;
 }

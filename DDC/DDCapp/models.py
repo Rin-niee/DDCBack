@@ -1,12 +1,13 @@
 from django.db import models
 
-# Create your models here.
 #датазаписи(01.01.2025), 
 # статус(бизнес, личное, налог, !список может расширяться!), 
 # категория и подкатегория, типКатегория “Инфраструктура” (подкатегории: "VPS", "Proxy")Категория “Маркетинг” (подкатегории: "Farpost", "Avito") Данный список должен иметь возможность расширяться, 
 # сумма(количество средств в рублях, например, 1 000 р.:), 
 # комментарий(в свободной форме, не обязателен к заполнению)
 
+
+#Модель статусов
 class Status(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -14,7 +15,7 @@ class Status(models.Model):
         return self.name
 
 
-# Типы денежных операций
+# Модель типов денежных операций
 class Type(models.Model):
     name = models.CharField(max_length=100, unique=True)
 
@@ -22,7 +23,7 @@ class Type(models.Model):
         return self.name
 
 
-# Категории с привязкой к типу
+# Категории с привязкой к типу(тип - внешний ключ)
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     type = models.ForeignKey(Type, related_name='categories', on_delete=models.CASCADE)

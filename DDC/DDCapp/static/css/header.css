@@ -1,5 +1,5 @@
 .head{
-    background-color: #B9EDDD;
+    background-color: #023535;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,6 +19,7 @@
 .right_head_part{
     margin-right: 2%;
 }
+
 .linkie_head{
     font-family: 'Courier New', Courier, monospace;
     font-size: 20px;
@@ -26,13 +27,10 @@
     text-decoration: none;
     color: #008F8C;
 }
+
 .head_name{
     margin: 0px 48px;
     font-size: 55px;
     font-family: 'Courier New', Courier, monospace;
     color: #008F8C;
-}
-.pic_head{
-    /* width: 10%;
-    height: auto; */
 }

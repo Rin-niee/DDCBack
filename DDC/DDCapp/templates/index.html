@@ -13,66 +13,85 @@
 </head>
 <body>
 {% include "header.html" %}
-<form method="GET">
-<div class ='filter_form_index'>
-    <div class="couple">
-        <select class="couple_left" name="start_date" id="start_date">
-            <option value="">Дата от</option>
-            {% for date in unique_dates %}
-                <option value="{{ date|date:"Y-m-d" }}">{{ date|date:"d.m.Y" }}</option>
-            {% endfor %}
-        </select>
-        <select class="couple_right" name="end_date" id="end_date">
-            <option value="">до</option>
-            {% for date in unique_dates %}
-                <option value="{{ date|date:"Y-m-d" }}">{{ date|date:"d.m.Y" }}</option>
-            {% endfor %}
-        </select>
-    </div>
+<!-- Форма/фильтр для поиска статей по выбранным данным -->
+<form class ='filter_form'method="GET">
     
-    <select name="status" id="status">
-        <option value="">Статус</option>
-        {% for status in statuses %}
-        <option value="{{ status.id }}" {% if status.id == request.GET.status %}selected{% endif %}>{{ status.name }}</option>
-        {% endfor %}
-    </select>
-
-    <select id="type" name="type">
-        <option value="">Тип</option>
-        {% for type in types %}
-            <option value="{{ type.id }}" {% if cashflow and cashflow.type.id == type.id %}selected{% endif %}>{{ type.name }}</option>
-        {% endfor %}
-    </select>
-
-    <select class="couple_left" id="category" name="category">
-        <option value="">Категория</option>
-    </select>
-
-    <select class="couple_right" id="subcategory" name="subcategory">
-        <option value="">Подкатегория</option>
-    </select>
-</div>
-    <button type="submit">Применить фильтр</button>
-
+    <div class = 'index_filter_container'>
+        <div class = 'found_item'>
+            <!-- ДАТЫ -->
+            <div class="couple" id = 'date_form'>
+                <select class="couple_left" name="start_date" id="start_date">
+                    <option value="">Дата от</option>
+                    {% for date in unique_dates %}
+                        <option value="{{ date|date:"Y-m-d" }}">{{ date|date:"d.m.Y" }}</option>
+                    {% endfor %}
+                </select>
+                <select class="couple_right" name="end_date" id="end_date">
+                    <option value="">до</option>
+                    {% for date in unique_dates %}
+                        <option value="{{ date|date:"Y-m-d" }}">{{ date|date:"d.m.Y" }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- СТАТУС -->
+            <select name="status" id="status">
+                <option value="">Статус</option>
+                {% for status in statuses %}
+                <option value="{{ status.id }}" {% if status.id == request.GET.status %}selected{% endif %}>{{ status.name }}</option>
+                {% endfor %}
+            </select>
+            <!-- ТИП -->
+            <select id="type" name="type">
+                <option value="">Тип</option>
+                {% for type in types %}
+                    <option value="{{ type.id }}" {% if cashflow and cashflow.type.id == type.id %}selected{% endif %}>{{ type.name }}</option>
+                {% endfor %}
+            </select>
+            <!-- КАТЕГОРИЯ -->
+            <select id="category" name="category">
+                <option value="">Категория</option>
+            </select>
+            <!-- ПОДКАТЕГОРИЯ -->
+            <select id="subcategory" name="subcategory">
+                <option value="">Подкатегория</option>
+            </select>
+        </div>
+        <!-- кнопки -->
+        <div class = 'buttons_index_form'>
+            <button type="submit">Применить фильтр</button>
+            <button class="empty_btn" data-target-url="{% url 'index' %}">Сбросить</button>
+        </div>
+    </div>
 </form>
-<button class="empty_btn" data-target-url="{% url 'index' %}"><p>Сбросить</p></button>
 
+<!-- вывод -->
 {% for cashlil in cashflows %}
- <div class = 'blockDDC'>
-                   <tr>
-                    <td>{{ cashlil.date }}</td>
-                    <td>{{ cashlil.status }}</td>
-                    <td>{{ cashlil.category }}</td>
-                    <td>{{ cashlil.count_sum }}</td>
-                    <td>{{ cashlil.comment }}</td>
-                    <a href="{% url 'edit_cashflow' cashlil.id %}">lalala</a>
-                </tr>
+<div class = 'blockDDC'>
+    <!-- строки с выводом данных кроме комментария и цены -->
+    <div class='exit_data'>
+        <div class = 'cashilil_data'>
+            <p class = 'index_exit'>{{ cashlil.date }}</p>
+            <p class = 'index_exit'>{{ cashlil.status }}</p>
+            <p class = 'index_exit'>{{ cashlil.category }}</p>
+            <p class = 'index_exit'>{{ cashlil.subcategory }}</p>
+        </div>
+        <div class = 'link_redact'>
+            <p class = 'index_exit'><a href="{% url 'edit_cashflow' cashlil.id %}"><img id = 'edit_pic' src ='{% static "\img\edit.png" %}' alt="edit"></a></p>
+        </div>
+    </div>
+    <!-- комментарии и цена -->
+    <div class = 'block_sumcomment'>
+        <p class = 'index_exit' id = 'comment'>{{ cashlil.comment }}</p>
+        <p class = 'index_exit' id = 'count_sum'>{{ cashlil.count_sum }}</p>
+    </div>
 </div>
-            {% empty %}
-                <tr>
-                    <td colspan="5">Нет записей о движении денежных средств.</td>
-                </tr>
-            {% endfor %}
+
+<!-- вывод в случае отсутствия  -->
+    {% empty %}
+        <tr>
+            <td colspan="5">Нет записей о движении денежных средств.</td>
+        </tr>
+    {% endfor %}
 
 </body>
 </html>

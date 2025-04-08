@@ -6,41 +6,86 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/for_all.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/control.css' %}">
 </head>
 <body>
     {% include 'header.html' %}
-    <h1>Управление справочниками</h1>
-
-    <!-- БЛОК СТАТУСОВ -->
-    <h2>Статусы</h2>
-    <ul>
-        {% for status in statuses %}
-            <li>{{ status.name }} 
-                <a href="{% url 'delete_entry' 'status' status.id %}" onclick="return confirm('Удалить?')">❌</a>
-            </li>
-        {% endfor %}
-    </ul>
-    
-    <form method="POST">
-        {% csrf_token %}
-        {{ status_form.as_p }}
-        <button type="submit" name="status_form">Добавить</button>
-    </form>
-
-    <!-- БЛОК ТИПОВ -->
-    <h2>Типы</h2>
-    <ul>
-        {% for type in types %}
+    <div class = 'title_mark'>
+        <h1 class = 'name_title'>Управление справочниками</h1>
+    </div>
+<div class = 'main_container'>
+    <div class = 'status_type'>
+        <!-- СТАТУСЫ -->
+        <div class = 'backpart'>
+            <h2>Статусы</h2>
+            <ul>
+                {% for status in statuses %}
+                    <li>{{ status.name }} 
+                        <a href="{% url 'delete_entry' 'status' status.id %}" onclick="return confirm('Удалить?')"><img id = 'trash_pic' src ='{% static "\img\trash.png" %}' alt="trash"></a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <form class = 'category_plus' method="POST">
+                {% csrf_token %}
+                {{status_form.name }}
+                <button type="submit" name="status_form">Добавить</button>
+            </form>
+        </div>
+    <!-- ТИПЫ -->
+        <div class = 'backpart'>
+            <h2>Типы</h2>
+            <ul>
+                {% for type in types %}
+                    <li><strong>{{ type.name }}</strong>
+                        <a href="{% url 'delete_entry' 'type' type.id %}" onclick="return confirm('Удалить?')"><img id = 'trash_pic' src ='{% static "\img\trash.png" %}' alt="trash"></a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <form class = 'category_plus' method="POST">
+                {% csrf_token %}
+                {{ type_form.name }}
+                <button type="submit" name="type_form">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <div class = 'category_subcategory'>
+        <div class = 'backpart'>
+            <!-- КАТЕГОРИИ -->
+            <h2>Категории</h2>
+            {% for type in types %}
             <li><strong>{{ type.name }}</strong>
-                <a href="{% url 'delete_entry' 'type' type.id %}" onclick="return confirm('Удалить?')">❌</a>
                 <ul>
                     {% for category in type.categories.all %}
                         <li>{{ category.name }} 
-                            <a href="{% url 'delete_entry' 'category' category.id %}" onclick="return confirm('Удалить?')">❌</a>
+                            <a href="{% url 'delete_entry' 'category' category.id %}" onclick="return confirm('Удалить?')"><img id = 'trash_pic' src ='{% static "\img\trash.png" %}' alt="trash"></a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+            {% endfor %}
+            <form method="POST">
+                {% csrf_token %}
+            <div class = 'line_category'>
+                <div class = 'line_category_write'>
+                    {{ category_form.type }}
+                    {{ category_form.name }}
+                </div>
+                    <button type="submit" name="category_form">Добавить</button>
+            </div>
+        </form>
+        </div>
+        <div class = 'backpart'>
+            <!-- ПОДКАТЕГОРИИ -->
+            <h2>Подкатегории</h2>
+            {% for type in types %}
+            <li><strong>{{ type.name }}</strong>
+                <ul>
+                    {% for category in type.categories.all %}
+                        <li>{{ category.name }} 
                             <ul>
                                 {% for subcategory in category.subcategories.all %}
                                     <li>{{ subcategory.name }}
-                                        <a href="{% url 'delete_entry' 'subcategory' subcategory.id %}" onclick="return confirm('Удалить?')">❌</a>
+                                        <a href="{% url 'delete_entry' 'subcategory' subcategory.id %}" onclick="return confirm('Удалить?')"><img id = 'trash_pic' src ='{% static "\img\trash.png" %}' alt="trash"></a>
                                     </li>
                                 {% endfor %}
                             </ul>
@@ -48,32 +93,19 @@
                     {% endfor %}
                 </ul>
             </li>
-        {% endfor %}
-    </ul>
-
-    <!-- ФОРМА ДОБАВЛЕНИЯ ТИПОВ -->
-    <h2>Добавить тип</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ type_form.as_p }}
-        <button type="submit" name="type_form">Добавить</button>
-    </form>
-
-    <!-- ФОРМА ДОБАВЛЕНИЯ КАТЕГОРИЙ -->
-    <h2>Добавить категорию</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ category_form.as_p }}
-        <button type="submit" name="category_form">Добавить</button>
-    </form>
-
-    <!-- ФОРМА ДОБАВЛЕНИЯ ПОДКАТЕГОРИЙ -->
-    <h2>Добавить подкатегорию</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{ subcategory_form.as_p }}
-        <button type="submit" name="subcategory_form">Добавить</button>
-    </form>
-
+            {% endfor %}
+            <form method="POST">
+                {% csrf_token %}
+            <div class = 'line_category'>
+                <div class = 'line_category_write'>
+                    {{ subcategory_form.category }}
+                    {{ subcategory_form.name }}
+                </div>
+                <button type="submit" name="subcategory_form">Добавить</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

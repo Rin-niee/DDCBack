@@ -1,9 +1,8 @@
 from django import forms
 from .models import *
-from datetime import datetime
 from django.utils import timezone
 
-
+#модель необходимой таблицы
 class CashFlowForm(forms.ModelForm):
     class Meta:
         model = CashFlow
@@ -12,18 +11,24 @@ class CashFlowForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
+        self.fields['status'].empty_label = 'Выберите статус'
+        self.fields['type'].empty_label = 'Выберите тип'
+        self.fields['category'].empty_label = 'Выберите категорию'
+        self.fields['subcategory'].empty_label = 'Выберите подкатегорию'
+        self.fields['count_sum'].widget.attrs['placeholder']= 'Введите сумму'
+        self.fields['comment'].widget.attrs['placeholder']= 'Введите комментарий'
+        
         if not self.instance.date:
             self.fields['date'].initial = timezone.now()
 
-        # Если объект уже существует (редактирование), загружаем категории и подкатегории
+        # Редактирование моделей. Загрузка подкатегорий и категорий из БД
         if self.instance.pk:  
             self.fields['category'].queryset = Category.objects.filter(type=self.instance.type).order_by('name')
             self.fields['subcategory'].queryset = Subcategory.objects.filter(category=self.instance.category).order_by('name')
         else:
             self.fields['category'].queryset = Category.objects.none()
             self.fields['subcategory'].queryset = Subcategory.objects.none()
-
-        # Если форма отправляется (POST-запрос), подгружаем данные динамически
+        #обновление списков в соответствии с выбранными зависимостями(тип - категория, категория - подкатегория)
         if 'type' in self.data:
             try:
                 type_id = int(self.data.get('type'))
@@ -38,25 +43,49 @@ class CashFlowForm(forms.ModelForm):
             except (ValueError, TypeError):
                 pass
 
-
+#форма модели статусов(создание)
 class StatusForm(forms.ModelForm):
     class Meta:
         model = Status
         fields = ['name']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
+        self.fields['name'].widget.attrs['placeholder']= 'Название статуса'
+
+#форма модели типов(создание)
 class TypeForm(forms.ModelForm):
     class Meta:
         model = Type
         fields = ['name']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
+        self.fields['name'].widget.attrs['placeholder']= 'Название типа'
+
+#форма модели категорий(создание)
 class CategoryForm(forms.ModelForm):
     class Meta:
         model = Category
         fields = ['name', 'type']
-        widgets = {'type': forms.Select(attrs={'class': 'type-select'})}  # Выпадающий список типов
+        widgets = {'type': forms.Select(attrs={'class': 'type-select'})}
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        self.fields['type'].empty_label = 'Выберите тип'
+        self.fields['name'].widget.attrs['placeholder']= 'Название категории'
+
+
+#форма модели подкатегорий(создание)
 class SubcategoryForm(forms.ModelForm):
     class Meta:
         model = Subcategory
         fields = ['name', 'category']
-        widgets = {'category': forms.Select(attrs={'class': 'category-select'})}  # Выпадающий список категорий
+        widgets = {'category': forms.Select(attrs={'class': 'category-select'})}
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['category'].empty_label = 'Выберите категорию'
+        self.fields['name'].widget.attrs['placeholder']= 'Название подкатегории'
