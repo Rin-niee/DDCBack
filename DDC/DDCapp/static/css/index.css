@@ -76,3 +76,10 @@
     width: 65%;
     height: auto;
 }
+
+.None_answer {
+    margin: 20px 48px;
+    font-size: 20px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #008F8C;
+}
