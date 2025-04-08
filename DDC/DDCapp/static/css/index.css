@@ -1,0 +1,29 @@
+.filter_form_index{
+    display: flex;
+    margin-top: 90px;
+    align-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: column;
+    background: #015958;
+    border-radius: 21px;
+    align-items: center;
+}
+select{
+    color: white;
+    background: #008F8C;
+    border-radius: 20px;
+}
+.blockDDC{
+    background-color: antiquewhite;
+}
+
+.couple {display: flex;}
+.couple_left{
+    width: 50% !important;
+    border-radius: 32px 0px 0px 32px !important;
+}
+
+.couple_right{
+    width: 50% !important;
+    border-radius: 0px 32px 32px 0px !important
+}

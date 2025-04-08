@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная страница</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/for_all.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/catalog.js' %}"></script>
+    <script src="{% static 'js/cleanform.js' %}"></script>
+</head>
+<body>
+{% include "header.html" %}
+<form method="GET">
+<div class ='filter_form_index'>
+    <div class="couple">
+        <select class="couple_left" name="start_date" id="start_date">
+            <option value="">Дата от</option>
+            {% for date in unique_dates %}
+                <option value="{{ date|date:"Y-m-d" }}">{{ date|date:"d.m.Y" }}</option>
+            {% endfor %}
+        </select>
+        <select class="couple_right" name="end_date" id="end_date">
+            <option value="">до</option>
+            {% for date in unique_dates %}
+                <option value="{{ date|date:"Y-m-d" }}">{{ date|date:"d.m.Y" }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <select name="status" id="status">
+        <option value="">Статус</option>
+        {% for status in statuses %}
+        <option value="{{ status.id }}" {% if status.id == request.GET.status %}selected{% endif %}>{{ status.name }}</option>
+        {% endfor %}
+    </select>
+
+    <select id="type" name="type">
+        <option value="">Тип</option>
+        {% for type in types %}
+            <option value="{{ type.id }}" {% if cashflow and cashflow.type.id == type.id %}selected{% endif %}>{{ type.name }}</option>
+        {% endfor %}
+    </select>
+
+    <select class="couple_left" id="category" name="category">
+        <option value="">Категория</option>
+    </select>
+
+    <select class="couple_right" id="subcategory" name="subcategory">
+        <option value="">Подкатегория</option>
+    </select>
+</div>
+    <button type="submit">Применить фильтр</button>
+
+</form>
+<button class="empty_btn" data-target-url="{% url 'index' %}"><p>Сбросить</p></button>
+
+{% for cashlil in cashflows %}
+ <div class = 'blockDDC'>
+                   <tr>
+                    <td>{{ cashlil.date }}</td>
+                    <td>{{ cashlil.status }}</td>
+                    <td>{{ cashlil.category }}</td>
+                    <td>{{ cashlil.count_sum }}</td>
+                    <td>{{ cashlil.comment }}</td>
+                    <a href="{% url 'edit_cashflow' cashlil.id %}">lalala</a>
+                </tr>
+</div>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Нет записей о движении денежных средств.</td>
+                </tr>
+            {% endfor %}
+
+</body>
+</html>
+
+

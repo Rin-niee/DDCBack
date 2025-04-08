@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% if cashlil %}Редактирование{% else %}Создание{% endif %} записи</title>
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/for_all.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/form.js' %}"></script>
+</head>
+<body>
+{% include 'header.html' %}
+<h1>{% if cashlil %}Редактирование{% else %}Создание{% endif %} записи</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% if cashlil %}Сохранить изменения{% else %}Создать запись{% endif %}</button>
+</form>
+{% if cashlil %}
+    <form action="{% url 'cashflow_delete' cashlil.id %}" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту запись?');">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+{% endif %}
+
+</body>
+</html>

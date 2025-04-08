@@ -1,0 +1,11 @@
+{% load static %}
+<div class= 'head'>
+    <div class ='left_head_part'>
+        <a href="{% url 'index' %}"><img class = 'pic_head' src ='{% static "\img\image.png" %}' alt="logo"></a>
+        <h1 class = 'head_name'>ДДС</h1>
+    </div>
+    <div class ='right_head_part'>
+        <a class = 'linkie_head' href="{% url 'entry' %}">Создать новую запись</a>
+        <a class = 'linkie_head' href="{% url 'control' %}">Управление справочниками</a>
+    </div>
+</div>
